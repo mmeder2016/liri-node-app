@@ -1,7 +1,7 @@
 //`spotify-this-song`
 // Song objects
 var Song = function(songName) {
-    console.log("Song()");
+    // Default Initialization of member variables
     if (songName.length === 0) {
         this.name = 'The Sign';
         this.artist = "Ace of Base";
@@ -11,25 +11,24 @@ var Song = function(songName) {
     }
     this.previewLink = "";
     this.album = "";
-
-    this.setData = function(data) {
-        console.log("Song.setData()");
+    // Default Initialization of member variables from the spotify json opbj
+    this.setData = function(json_obj) {
         try {
-            this.name = data.tracks.items[0].name;
-            this.artist = data.tracks.items[0].artists[0].name;
-            this.previewLink = data.tracks.items[0].preview_url;
-            this.album = data.tracks.items[0].album.name;
+            this.name = json_obj.tracks.items[0].name;
+            this.artist = json_obj.tracks.items[0].artists[0].name;
+            this.previewLink = json_obj.tracks.items[0].preview_url;
+            this.album = json_obj.tracks.items[0].album.name;
         } catch (err) {
-            console.log(err);
+            var err_msg = "Song.setData():" + err;
+            throw err_msg;
         }
     };
 
     this.print = function() {
-        console.log("Song.print()");
         console.log("     Artist: " + this.artist);
         console.log("  Song name: " + this.name);
+        console.log("Preview URL: " + this.previewLink);        
         console.log("      Album: " + this.album);
-        console.log("Preview URL: " + this.previewLink);
     };
 };
 

@@ -1,14 +1,13 @@
 var request = require('request');
 
-//`movie-this`
-// OMDBS objects
+// OMDB objects
 var OMDB = function(movie) {
     this.movie = movie;
     this.options = '&y=&plot=short&r=json';
     this.queryUrl = 'http://www.omdbapi.com/?t=' + this.movie + this.options;
 
+    // Get the movie data and log it
     this.getMovie = function() {
-        console.log("OMDB.queryUrl: " + this.queryUrl);
         request(this.queryUrl, function(error, response, body) {
             if (response.statusCode === 200) {
                 var json_str = JSON.parse(body);
@@ -22,9 +21,10 @@ var OMDB = function(movie) {
                 console.log(" Rotten Tomatoes Rating: " + "NONE" /*json_str[""]*/ );
                 console.log(" Rotten Tomatoes URL: " + "NONE" /*json_str[""]*/ );
             } else {
-                console.log("obdb request failed. error code: " + response.statusCode);
+                console.log("OMDB.getMovie()failed: error code: " + response.statusCode);
             }
         });
     };
 };
+
 module.exports = OMDB;
